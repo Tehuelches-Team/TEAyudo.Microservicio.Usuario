@@ -1,5 +1,5 @@
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using TEAyudo_Usuarios;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,8 +6,6 @@ namespace Domain.Entities
 {
     public class Usuario
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UsuarioId { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
