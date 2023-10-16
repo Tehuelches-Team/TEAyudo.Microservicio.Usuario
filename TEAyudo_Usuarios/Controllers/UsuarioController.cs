@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
-using TEAyudo_Usuarios.Application.DTO;
 using TEAyudo_Usuarios;
 using Tools;
+using Application.Interface;
+using Application.Model.Response;
+using Application.Model.DTO;
 
 namespace TEAyudo.Controllers
 {
@@ -16,15 +18,48 @@ namespace TEAyudo.Controllers
 
         public UsuarioController(IUsuarioService UsuarioService)
         {
-           this.IUsuarioService UsuarioService = IUsuarioService UsuarioService;
+           this.UsuarioService = UsuarioService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsuarios() 
+        {
+            List<UsuarioResponse> ListaResponse = await UsuarioService.GetAllUsuarios();
+            if (ListaResponse.Count == 0)
+            {
+                var ObjetoAnonimo = new
+                {
+                    Mensaje = "No hay usuarios registrados actualmente."
+                };
+                return Ok(ObjetoAnonimo);
+            }
+            return Ok(ListaResponse);
+        }
         //// GET: api/Usuarios
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         //{
         //    return await _context.Usuarios.ToListAsync();
         //}
+
+
+
+
+        ////[HttpGet("{Id}")]
+        ////public async Task<ActionResult<Usuario>> GetUsuarioById(int Id) 
+        ////{
+        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.GetUsuarioById(Id);
+        ////    if (UsuarioResponse == null)
+        ////    {
+        ////        var ObjetoAnonimo = new
+        ////        {
+        ////            Mensaje = "No hay usuarios registrados actualmente."
+        ////        };
+        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 204}; //no se si el 204 hace que vuelva vacio y no muestre el objeto
+        ////    }
+        ////    return Ok(UsuarioResponse);
+        ////}
+
 
         //// GET: api/Usuarios/5
         //[HttpGet("{id}")]
@@ -39,6 +74,26 @@ namespace TEAyudo.Controllers
 
         //    return usuario;
         //}
+
+
+
+
+        ////[HttpPost]
+        ////public async Task<IActionResult> PostUsuario(UsuarioDTO UsuarioDTO) 
+        ////{
+        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.PostUsuario(UsuarioDTO);
+        ////    if (UsuarioResponse == null)
+        ////    {
+        ////        var ObjetoAnonimo = new
+        ////        {
+        ////            Mensaje = "No se ha podido crear el usuario por x motivo."
+        ////        };
+        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 209 }; 
+        ////    }
+        ////    return new JsonResult(UsuarioResponse) { StatusCode = 201};
+        ////}
+
+
 
         //// POST: api/Usuarios
         //[HttpPost]
@@ -64,6 +119,22 @@ namespace TEAyudo.Controllers
 
         //    return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioId }, usuario);
         //}
+
+
+        ////[HttpPut("{Id}")]
+        ////public async Task<IActionResult> PutUsuario(int Id, UsuarioDTO UsuarioDTO) 
+        ////{
+        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.PutUsuario(Id, UsuarioDTO);
+        ////    if (UsuarioResponse == null)
+        ////    {
+        ////        var ObjetoAnonimo = new
+        ////        {
+        ////            Mensaje = "No se pudo encontrar el usuario Id = " + Id
+        ////        };
+        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 404};
+        ////    }
+        ////    return new JsonResult(UsuarioResponse) { StatusCode = 201 };
+        ////}
 
         //// PUT: api/Usuarios/5
         //[HttpPut("{id}")]

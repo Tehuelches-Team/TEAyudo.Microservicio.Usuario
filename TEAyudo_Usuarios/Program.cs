@@ -1,4 +1,8 @@
+using Application.Interface;
+using Application.Service;
+using Infrastructure.Commands;
 using Infrastructure.Persistence;
+using Infrastructure.Querys;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +21,10 @@ builder.Services.AddDbContext<TEAyudoContext>(options =>
 
 });
 
+
+builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<IUsuarioQuery, UsuarioQuery>();
+builder.Services.AddTransient<IUsuarioCommand, UsuarioCommand>();
 
 
 var app = builder.Build();

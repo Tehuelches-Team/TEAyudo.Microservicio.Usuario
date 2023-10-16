@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 namespace Infrastructure.Persistence;
 public class TEAyudoContext : DbContext
 {
-    public DbSet<EstadoUsuario> EstadoUsuarios { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
 
     public TEAyudoContext(DbContextOptions<TEAyudoContext> options) : base(options)
@@ -13,11 +12,8 @@ public class TEAyudoContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Usuario>()
-            .HasOne(u => u.EstadoUsuario)
-            .WithOne(eu => eu.Usuario)
-            .HasForeignKey<EstadoUsuario>(eu => eu.EstadoUsuarioId);
-
+        modelBuilder.Entity<Usuario>().HasKey(f => f.UsuarioId);
+        modelBuilder.Entity<Usuario>().Property(f => f.EstadoUsuarioId).IsRequired(false);
     }
 
 
