@@ -24,5 +24,16 @@ namespace Infrastructure.Querys
             return ListaUsuario;
         }
 
+        public async Task<bool> GetUsuarioByEmail(string Correo)
+        {
+            if (await Context.Usuarios.FirstOrDefaultAsync(s => s.CorreoElectronico == Correo) == null)
+                return false;
+            return true;
+        }
+
+        public async Task<Usuario?> GetUsuarioById(int Id)
+        {
+            return await Context.Usuarios.FirstOrDefaultAsync(s => s.UsuarioId == Id);
+        }
     }
 }

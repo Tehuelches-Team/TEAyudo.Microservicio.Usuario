@@ -14,7 +14,7 @@ namespace Domain.Entities
         public string FotoPerfil { get; set; }
         public string Domicilio { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public int EstadoUsuarioId { get; set; }
+        public int? EstadoUsuarioId { get; set; }
         public string Token { get; set; }
     }
 

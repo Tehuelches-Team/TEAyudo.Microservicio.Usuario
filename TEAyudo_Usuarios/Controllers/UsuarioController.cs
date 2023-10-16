@@ -7,6 +7,8 @@ using Tools;
 using Application.Interface;
 using Application.Model.Response;
 using Application.Model.DTO;
+using Application.Exceptions;
+using Application.Validation;
 
 namespace TEAyudo.Controllers
 {
@@ -31,68 +33,61 @@ namespace TEAyudo.Controllers
                 {
                     Mensaje = "No hay usuarios registrados actualmente."
                 };
-                return Ok(ObjetoAnonimo);
+                return NotFound(ObjetoAnonimo);
             }
             return Ok(ListaResponse);
         }
-        //// GET: api/Usuarios
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
-        //{
-        //    return await _context.Usuarios.ToListAsync();
-        //}
 
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetUsuarioById(int Id)
+        {
+            UsuarioResponse? UsuarioResponse = await UsuarioService.GetUsuarioById(Id);
+            if (UsuarioResponse == null)
+            {
+                var ObjetoAnonimo = new
+                {
+                    Mensaje = "No hay usuarios registrados actualmente."
+                };
+                return NotFound(ObjetoAnonimo); 
+            }
+            return Ok(UsuarioResponse);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> postusuario(UsuarioDTO UsuarioDTO) 
+        {
+            try //Consultar respecto al estado del usuario
+            {
+                ValidationFecha.Validar(UsuarioDTO.FechaNacimiento);
+            }catch (Exception ex)
+            {
+                var objetoanonimo = new
+                {
+                    mensaje = ex.Message
+                };
+                return BadRequest(objetoanonimo);
+            }
 
+            if (await UsuarioService.ComprobarCorreo(UsuarioDTO.CorreoElectronico))
+            {
+                var objetoanonimo = new
+                {
+                    mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
+                };
+                return new JsonResult(objetoanonimo) { StatusCode = 209 };
+            }
 
-        ////[HttpGet("{Id}")]
-        ////public async Task<ActionResult<Usuario>> GetUsuarioById(int Id) 
-        ////{
-        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.GetUsuarioById(Id);
-        ////    if (UsuarioResponse == null)
-        ////    {
-        ////        var ObjetoAnonimo = new
-        ////        {
-        ////            Mensaje = "No hay usuarios registrados actualmente."
-        ////        };
-        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 204}; //no se si el 204 hace que vuelva vacio y no muestre el objeto
-        ////    }
-        ////    return Ok(UsuarioResponse);
-        ////}
-
-
-        //// GET: api/Usuarios/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Usuario>> GetUsuario(int id)
-        //{
-        //    var usuario = await _context.Usuarios.FindAsync(id);
-
-        //    if (usuario == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return usuario;
-        //}
-
-
-
-
-        ////[HttpPost]
-        ////public async Task<IActionResult> PostUsuario(UsuarioDTO UsuarioDTO) 
-        ////{
-        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.PostUsuario(UsuarioDTO);
-        ////    if (UsuarioResponse == null)
-        ////    {
-        ////        var ObjetoAnonimo = new
-        ////        {
-        ////            Mensaje = "No se ha podido crear el usuario por x motivo."
-        ////        };
-        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 209 }; 
-        ////    }
-        ////    return new JsonResult(UsuarioResponse) { StatusCode = 201};
-        ////}
-
+            UsuarioResponse? Usuarioresponse = await UsuarioService.PostUsuario(UsuarioDTO,Token.GenerarToken());
+            if (Usuarioresponse == null)
+            {
+                var objetoanonimo = new
+                {
+                    mensaje = "no se ha podido crear el usuario por x motivo."
+                };
+                return new JsonResult(objetoanonimo) { StatusCode = 209 }; 
+            }
+            return new JsonResult(Usuarioresponse) { StatusCode = 201};
+        }
 
 
         //// POST: api/Usuarios
@@ -116,25 +111,52 @@ namespace TEAyudo.Controllers
         //    _context.Usuarios.Add(usuario);
         //    await _context.SaveChangesAsync();
         //    await VerificacionRegistro.EnviarToken(usuario);
-
         //    return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioId }, usuario);
         //}
 
 
-        ////[HttpPut("{Id}")]
-        ////public async Task<IActionResult> PutUsuario(int Id, UsuarioDTO UsuarioDTO) 
-        ////{
-        ////    UsuarioResponse? UsuarioResponse = await UsuarioService.PutUsuario(Id, UsuarioDTO);
-        ////    if (UsuarioResponse == null)
-        ////    {
-        ////        var ObjetoAnonimo = new
-        ////        {
-        ////            Mensaje = "No se pudo encontrar el usuario Id = " + Id
-        ////        };
-        ////        return new JsonResult(ObjetoAnonimo) { StatusCode = 404};
-        ////    }
-        ////    return new JsonResult(UsuarioResponse) { StatusCode = 201 };
-        ////}
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> PutUsuario(int Id, UsuarioDTO UsuarioDTO)
+        {
+            UsuarioResponse? UsuarioResponse = await UsuarioService.GetUsuarioById(Id);
+            if (UsuarioResponse == null)
+            {
+                var ObjetoAnonimo = new
+                {
+                    Mensaje = "No existe un usuario asociado con el Id " + Id
+                };
+                return NotFound(ObjetoAnonimo);
+            }
+
+            try //Consultar respecto al estado del usuario
+            {
+                ValidationFecha.Validar(UsuarioDTO.FechaNacimiento);
+            }
+            catch (Exception ex)
+            {
+                var objetoanonimo = new
+                {
+                    mensaje = ex.Message
+                };
+                return BadRequest(objetoanonimo);
+            }
+            if (UsuarioResponse.CorreoElectronico != UsuarioDTO.CorreoElectronico)
+            {
+                if (await UsuarioService.ComprobarCorreo(UsuarioDTO.CorreoElectronico))
+                {
+                    var objetoanonimo = new
+                    {
+                        mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
+                    };
+                    return new JsonResult(objetoanonimo) { StatusCode = 209 };
+                }
+            }
+
+            UsuarioResponse = await UsuarioService.PutUsuario(Id, UsuarioDTO);
+            
+            return new JsonResult(UsuarioResponse) { StatusCode = 201 };
+        }
+
 
         //// PUT: api/Usuarios/5
         //[HttpPut("{id}")]

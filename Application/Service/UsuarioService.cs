@@ -1,5 +1,6 @@
 ﻿using Application.Interface;
 using Application.Mapping;
+using Application.Model.DTO;
 using Application.Model.Response;
 using Domain.Entities;
 using System;
@@ -27,6 +28,45 @@ namespace Application.Service
             MapUsuariosToUsuariosResponse Mapping = new MapUsuariosToUsuariosResponse();
             List<UsuarioResponse> ListaResponse = Mapping.Map(ListaUsuario);
             return ListaResponse;
+        }
+
+        public async Task<UsuarioResponse?> GetUsuarioById(int Id)
+        {
+            Usuario? Usuario = await UsuarioQuery.GetUsuarioById(Id);
+            if (Usuario == null)
+            {
+                return null; 
+            }
+
+            MapUsuarioToUsuarioResponse Mapping = new MapUsuarioToUsuarioResponse();
+            return Mapping.Map(Usuario);
+        }
+
+        public async Task<UsuarioResponse?> PostUsuario(UsuarioDTO UsuarioRecibido,string Token)
+        {
+            //Crear clase validar para la fecha.
+            MapUsuarioDTOToUsuario MappingUser = new MapUsuarioDTOToUsuario();
+            Usuario? Usuario = MappingUser.Map(UsuarioRecibido);
+            Usuario.Token= Token;
+            Usuario = await UsuarioCommand.PostUsuario(Usuario);
+            if (Usuario == null)
+            {
+                return null;
+            }
+            MapUsuarioToUsuarioResponse Mapping = new MapUsuarioToUsuarioResponse();
+            return Mapping.Map(Usuario);
+        }
+
+        public async Task<bool> ComprobarCorreo(string Correo)
+        {
+            return await UsuarioQuery.GetUsuarioByEmail(Correo); //Podemos comprobar que el formato sea válido (En validation)
+        }
+
+        public async Task<UsuarioResponse?> PutUsuario(int Id, UsuarioDTO UsuarioRecibido)
+        {
+            Usuario Usuario = await UsuarioCommand.PutUsuario(Id, UsuarioRecibido);
+            MapUsuarioToUsuarioResponse Mapping = new MapUsuarioToUsuarioResponse();
+            return Mapping.Map(Usuario);
         }
     }
 }
