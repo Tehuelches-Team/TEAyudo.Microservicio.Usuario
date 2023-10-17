@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
-using SendGrid.Helpers.Mail;
 using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace TEAyudo_Usuarios;
 

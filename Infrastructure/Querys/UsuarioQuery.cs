@@ -2,23 +2,18 @@
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Querys
 {
     public class UsuarioQuery : IUsuarioQuery
     {
         private readonly TEAyudoContext Context;
-        public UsuarioQuery (TEAyudoContext Context)
+        public UsuarioQuery(TEAyudoContext Context)
         {
             this.Context = Context;
         }
 
-        public async Task<List<Usuario>> GetAllUsuarios() 
+        public async Task<List<Usuario>> GetAllUsuarios()
         {
             List<Usuario> ListaUsuario = await Context.Usuarios.ToListAsync();
             return ListaUsuario;

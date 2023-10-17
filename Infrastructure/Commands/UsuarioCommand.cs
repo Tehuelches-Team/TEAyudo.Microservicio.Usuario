@@ -3,11 +3,6 @@ using Application.Model.DTO;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Commands
 {
@@ -26,7 +21,7 @@ namespace Infrastructure.Commands
             return await Context.Usuarios.FirstOrDefaultAsync(s => s.UsuarioId == Usuario.UsuarioId);
         }
 
-        public async Task<Usuario> PutUsuari aso(int Id,UsuarioDTO UsuarioRecibido)
+        public async Task<Usuario> PutUsuario(int Id, UsuarioDTO UsuarioRecibido)
         {
             Usuario? Usuario = await Context.Usuarios.FirstOrDefaultAsync(s => s.UsuarioId == Id);
 
@@ -38,7 +33,14 @@ namespace Infrastructure.Commands
             Usuario.FotoPerfil = UsuarioRecibido.FotoPerfil;
             Usuario.FechaNacimiento = DateTime.Parse(UsuarioRecibido.FechaNacimiento);
             Context.SaveChanges();
-            return Usuario; //Verificar que funcione
+            return Usuario;
+        }
+
+        public async Task DeleteUsuario(int Id)
+        {
+            Usuario Usuario = await Context.Usuarios.FirstOrDefaultAsync(f => f.UsuarioId == Id);
+            Context.Remove(Usuario);
+            await Context.SaveChangesAsync();
         }
     }
 }

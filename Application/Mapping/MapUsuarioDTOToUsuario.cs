@@ -1,10 +1,5 @@
 ﻿using Application.Model.DTO;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Mapping
 {
@@ -21,6 +16,8 @@ namespace Application.Mapping
                 FotoPerfil = UsuarioRecibido.FotoPerfil,
                 Domicilio = UsuarioRecibido.Domicilio,
                 FechaNacimiento = DateTime.Parse(UsuarioRecibido.FechaNacimiento).Date,
+                //Token, hablar con Marce
+                EstadoUsuarioId = 0,
             };
         }
     }

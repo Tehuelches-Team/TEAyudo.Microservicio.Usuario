@@ -3,11 +3,6 @@ using Application.Mapping;
 using Application.Model.DTO;
 using Application.Model.Response;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service
 {
@@ -16,13 +11,13 @@ namespace Application.Service
         private readonly IUsuarioCommand UsuarioCommand;
         private readonly IUsuarioQuery UsuarioQuery;
 
-        public UsuarioService (IUsuarioCommand UsuarioCommand, IUsuarioQuery UsuarioQuery) 
+        public UsuarioService(IUsuarioCommand UsuarioCommand, IUsuarioQuery UsuarioQuery)
         {
             this.UsuarioQuery = UsuarioQuery;
             this.UsuarioCommand = UsuarioCommand;
         }
 
-        public async Task<List<UsuarioResponse>> GetAllUsuarios() 
+        public async Task<List<UsuarioResponse>> GetAllUsuarios()
         {
             List<Usuario> ListaUsuario = await UsuarioQuery.GetAllUsuarios();
             MapUsuariosToUsuariosResponse Mapping = new MapUsuariosToUsuariosResponse();
@@ -35,19 +30,19 @@ namespace Application.Service
             Usuario? Usuario = await UsuarioQuery.GetUsuarioById(Id);
             if (Usuario == null)
             {
-                return null; 
+                return null;
             }
 
             MapUsuarioToUsuarioResponse Mapping = new MapUsuarioToUsuarioResponse();
             return Mapping.Map(Usuario);
         }
 
-        public async Task<UsuarioResponse?> PostUsuario(UsuarioDTO UsuarioRecibido,string Token)
+        public async Task<UsuarioResponse?> PostUsuario(UsuarioDTO UsuarioRecibido, string Token)
         {
             //Crear clase validar para la fecha.
             MapUsuarioDTOToUsuario MappingUser = new MapUsuarioDTOToUsuario();
             Usuario? Usuario = MappingUser.Map(UsuarioRecibido);
-            Usuario.Token= Token;
+            Usuario.Token = Token;
             Usuario = await UsuarioCommand.PostUsuario(Usuario);
             if (Usuario == null)
             {
@@ -67,6 +62,11 @@ namespace Application.Service
             Usuario Usuario = await UsuarioCommand.PutUsuario(Id, UsuarioRecibido);
             MapUsuarioToUsuarioResponse Mapping = new MapUsuarioToUsuarioResponse();
             return Mapping.Map(Usuario);
+        }
+
+        public async Task DeleteUsuario(int Id)
+        {
+            await UsuarioCommand.DeleteUsuario(Id);
         }
     }
 }
