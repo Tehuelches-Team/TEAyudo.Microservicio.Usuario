@@ -11,6 +11,5 @@
         public string Domicilio { get; set; }
         public string FechaNacimiento { get; set; }
         public int? EstadoUsuarioId { get; set; }
-        public string Token { get; set; }
     }
 }

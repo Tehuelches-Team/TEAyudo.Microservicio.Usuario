@@ -18,7 +18,6 @@ namespace Application.Mapping
                 Domicilio = Usuario.Domicilio,
                 FechaNacimiento = Usuario.FechaNacimiento.ToString("dd/MM/yyyy"),
                 EstadoUsuarioId = Usuario.EstadoUsuarioId,
-                Token = Usuario.Token
             };
             return UsuarioResponse;
         }
