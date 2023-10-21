@@ -10,6 +10,7 @@ namespace Application.Mapping
             UsuarioResponse UsuarioResponse = new UsuarioResponse
             {
                 UsuarioId = Usuario.UsuarioId,
+                CUIL = Usuario.CUIL,
                 Nombre = Usuario.Nombre,
                 Apellido = Usuario.Apellido,
                 CorreoElectronico = Usuario.CorreoElectronico,

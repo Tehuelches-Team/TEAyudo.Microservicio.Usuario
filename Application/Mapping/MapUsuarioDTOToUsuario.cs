@@ -9,6 +9,7 @@ namespace Application.Mapping
         {
             return new Usuario
             {
+                CUIL = UsuarioRecibido.CUIL,
                 Nombre = UsuarioRecibido.Nombre,
                 Apellido = UsuarioRecibido.Apellido,
                 CorreoElectronico = UsuarioRecibido.CorreoElectronico,
