@@ -119,7 +119,7 @@ namespace TEAyudo.Controllers
                     {
                         mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
                     };
-                    return new JsonResult(objetoanonimo) { StatusCode = 209 };
+                    return Conflict(objetoanonimo);
                 }
             }
 
@@ -138,7 +138,7 @@ namespace TEAyudo.Controllers
                 {
                     mensaje = "No existe un usuario con el Id " + Id
                 };
-                return new JsonResult(objetoanonimo) { StatusCode = 209 };
+                return NotFound(objetoanonimo);
             }
             await UsuarioService.DeleteUsuario(Id);
             return Ok(UsuarioResponse);
