@@ -65,14 +65,14 @@ namespace TEAyudo.Controllers
                 return BadRequest(objetoanonimo);
             }
 
-            if (await UsuarioService.ComprobarCorreo(UsuarioDTO.CorreoElectronico))
-            {
-                var objetoanonimo = new
-                {
-                    mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
-                };
-                return new JsonResult(objetoanonimo) { StatusCode = 209 };
-            }
+            //if (await UsuarioService.ComprobarCorreo(UsuarioDTO.CorreoElectronico))
+            //{
+            //    var objetoanonimo = new
+            //    {
+            //        mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
+            //    };
+            //    return new JsonResult(objetoanonimo) { StatusCode = 209 };
+            //}
 
             UsuarioResponse? Usuarioresponse = await UsuarioService.PostUsuario(UsuarioDTO, Token.GenerarToken());
             if (Usuarioresponse == null)

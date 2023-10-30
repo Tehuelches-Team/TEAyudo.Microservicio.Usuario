@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TEAyudoContext))]
-    [Migration("20231017202200_v1")]
+    [Migration("20231030193702_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -36,6 +36,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Apellido")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CUIL")
+                        .HasColumnType("int");
 
                     b.Property<string>("Contrasena")
                         .IsRequired()
