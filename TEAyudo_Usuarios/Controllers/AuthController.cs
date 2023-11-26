@@ -18,9 +18,17 @@ namespace TEAyudo_Usuarios.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string token)
         {
-            var response = await _AuthService.VerificarToken(token);          
+            try 
+            {
+                var response = await _AuthService.VerificarToken(token);
+                return Ok(new { Token = response });
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
-
 
     }
 }
