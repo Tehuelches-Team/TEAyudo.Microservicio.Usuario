@@ -3,6 +3,7 @@ using Application.Service;
 using Infrastructure.Commands;
 using Infrastructure.Persistence;
 using Infrastructure.Querys;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,12 @@ builder.Services.AddDbContext<TEAyudoContext>(options =>
     options.UseSqlServer("Server=localhost;Database=TEAyudo_Usuarios;Trusted_Connection=True;TrustServerCertificate=True;Persist Security Info=true");
 
 });
-
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+});
+builder.Services.AddAuthorization();
 
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 builder.Services.AddTransient<IUsuarioQuery, UsuarioQuery>();
