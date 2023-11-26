@@ -26,7 +26,6 @@ builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 builder.Services.AddTransient<IUsuarioQuery, UsuarioQuery>();
 builder.Services.AddTransient<IUsuarioCommand, UsuarioCommand>();
 
-builder.Services.AddCors(x => x.AddDefaultPolicy(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
 
 var app = builder.Build();
 
@@ -36,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
