@@ -1,4 +1,5 @@
 ﻿using Application.Interface;
+using Application.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,18 +17,22 @@ namespace TEAyudo_Usuarios.Controllers
             _AuthService = AuthService;
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string token)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            try 
+            var token = _AuthService.GenerateToken(email, password);
+
+            // Devolver el token en el encabezado de la respuesta y el payload en el cuerpo de la respuesta
+            if(email == "matias@gmasdas.com" && password == "123123213")
             {
-                var response = await _AuthService.VerificarToken(token);
-                return Ok(new { Token = response });
+                Response.Headers.Add("Authorization", $"Bearer {token}");
+                return Ok(new { token });
+
             }
-            catch (Exception ex) 
-            {
-                return BadRequest(ex.Message);
+            else {                 
+                return Unauthorized();
             }
             
+
         }
 
     }

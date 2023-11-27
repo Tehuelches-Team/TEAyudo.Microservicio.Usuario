@@ -11,6 +11,7 @@ namespace Application.Interface
     public interface IAuthService
     {
         public Task<string> VerificarToken(string token);
-        public string GenerateToken(string nombre, string apellido, string foto, string correo);
+        public Task<string> VerificarTokenFirebase(string token);
+        public string GenerateToken(string email, string password);
     }
 }

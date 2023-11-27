@@ -3,6 +3,7 @@ using Application.Interface;
 using Application.Model.DTO;
 using Application.Model.Response;
 using Application.Validation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tools;
 
@@ -19,6 +20,7 @@ namespace TEAyudo.Controllers
             this.UsuarioService = UsuarioService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllUsuarios()
         {
