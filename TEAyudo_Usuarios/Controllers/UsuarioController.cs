@@ -20,7 +20,7 @@ namespace TEAyudo.Controllers
             this.UsuarioService = UsuarioService;
         }
 
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> GetAllUsuarios()
         {
