@@ -2,7 +2,9 @@
 using Application.Interface;
 using Application.Model.DTO;
 using Application.Model.Response;
+using Application.Service;
 using Application.Validation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tools;
 
@@ -13,10 +15,12 @@ namespace TEAyudo.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService UsuarioService;
+        private readonly IAuthService _AuthService;
 
-        public UsuarioController(IUsuarioService UsuarioService)
+        public UsuarioController(IUsuarioService UsuarioService, IAuthService AuthService)
         {
             this.UsuarioService = UsuarioService;
+            this._AuthService = AuthService;
         }
 
         [HttpGet]
@@ -46,7 +50,9 @@ namespace TEAyudo.Controllers
                 };
                 return NotFound(ObjetoAnonimo);
             }
-            return Ok(result);
+            var token = _AuthService.GenerateToken(correo, contrasena);
+            return new JsonResult(new { token, result }) { StatusCode = 201 };
+            //return Ok(new { token} , result);
         }
 
         [HttpGet("{Id}")]
