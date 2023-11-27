@@ -42,7 +42,7 @@ namespace TEAyudo.Controllers
             {
                 var ObjetoAnonimo = new
                 {
-                    Mensaje = "Ha ingresado erroneamente la contraseña."
+                    Mensaje = "Usuario no encontrado en la base de datos."
                 };
                 return NotFound(ObjetoAnonimo);
             }
