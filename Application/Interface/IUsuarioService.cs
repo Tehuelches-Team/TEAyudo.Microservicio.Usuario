@@ -11,5 +11,6 @@ namespace Application.Interface
         Task<bool> ComprobarCorreo(string Correo);
         Task<UsuarioResponse?> PutUsuario(int Id, UsuarioDTO UsuarioRecibido);
         Task DeleteUsuario(int Id);
+        Task<LogginResponse?> Loggin(string Correo,string contrasena);
     }
 }

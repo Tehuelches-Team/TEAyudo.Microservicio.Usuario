@@ -17,7 +17,7 @@ namespace Application.Mapping
                 FotoPerfil = UsuarioRecibido.FotoPerfil,
                 Domicilio = UsuarioRecibido.Domicilio,
                 FechaNacimiento = DateTime.Parse(UsuarioRecibido.FechaNacimiento).Date,
-                //Token, hablar con Marce
+                TipoUsuario = UsuarioRecibido.TipoUsuario,
                 EstadoUsuarioId = 0,
             };
         }

@@ -34,6 +34,21 @@ namespace TEAyudo.Controllers
             return Ok(ListaResponse);
         }
 
+        [HttpGet("{correo}/{contrasena}")]
+        public async Task<IActionResult> GetAllUsuarios(string correo, string contrasena)
+        {
+            LogginResponse? result = await UsuarioService.Loggin(correo,contrasena);
+            if (result == null)
+            {
+                var ObjetoAnonimo = new
+                {
+                    Mensaje = "Ha ingresado erroneamente la contraseña."
+                };
+                return NotFound(ObjetoAnonimo);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetUsuarioById(int Id)
         {

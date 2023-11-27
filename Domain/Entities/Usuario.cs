@@ -13,6 +13,7 @@
         public string Domicilio { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public int? EstadoUsuarioId { get; set; }
+        public int TipoUsuario { get; set; }
         public string Token { get; set; }
     }
 
