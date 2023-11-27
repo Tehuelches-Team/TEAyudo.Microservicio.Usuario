@@ -26,6 +26,7 @@ namespace Infrastructure.Migrations
                     Domicilio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EstadoUsuarioId = table.Column<int>(type: "int", nullable: true),
+                    TipoUsuario = table.Column<int>(type: "int", nullable: false),
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

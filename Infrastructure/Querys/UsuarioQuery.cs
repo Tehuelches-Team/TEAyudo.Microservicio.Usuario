@@ -30,5 +30,10 @@ namespace Infrastructure.Querys
         {
             return await Context.Usuarios.FirstOrDefaultAsync(s => s.UsuarioId == Id);
         }
+
+        public async Task<Usuario> GetUsuarioByLoggin(string Correo, string contrasena)
+        {
+           return await Context.Usuarios.FirstOrDefaultAsync(s => s.CorreoElectronico == Correo && s.Contrasena == contrasena);
+        }
     }
 }

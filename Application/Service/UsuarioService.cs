@@ -68,5 +68,19 @@ namespace Application.Service
         {
             await UsuarioCommand.DeleteUsuario(Id);
         }
+
+        public async Task<LogginResponse?> Loggin(string Correo,string contrasena)
+        {
+            Usuario usuario = await UsuarioQuery.GetUsuarioByLoggin(Correo, contrasena);
+            if (usuario != null)
+            {
+                return new LogginResponse
+                {
+                    UsuarioId = usuario.UsuarioId,
+                    TipoUsuario = usuario.TipoUsuario
+                };
+            }
+            return null;
+        }
     }
 }

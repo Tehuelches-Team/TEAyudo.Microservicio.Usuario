@@ -36,6 +36,21 @@ namespace TEAyudo.Controllers
             return Ok(ListaResponse);
         }
 
+        [HttpGet("{correo}/{contrasena}")]
+        public async Task<IActionResult> GetAllUsuarios(string correo, string contrasena)
+        {
+            LogginResponse? result = await UsuarioService.Loggin(correo,contrasena);
+            if (result == null)
+            {
+                var ObjetoAnonimo = new
+                {
+                    Mensaje = "Usuario no encontrado en la base de datos."
+                };
+                return NotFound(ObjetoAnonimo);
+            }
+            return Ok(result);
+        }
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetUsuarioById(int Id)
         {
@@ -66,15 +81,6 @@ namespace TEAyudo.Controllers
                 };
                 return BadRequest(objetoanonimo);
             }
-
-            //if (await UsuarioService.ComprobarCorreo(UsuarioDTO.CorreoElectronico))
-            //{
-            //    var objetoanonimo = new
-            //    {
-            //        mensaje = "no se ha podido crear el usuario debido a que el correo electronico ya se encuentra registrado."
-            //    };
-            //    return new JsonResult(objetoanonimo) { StatusCode = 209 };
-            //}
 
             UsuarioResponse? Usuarioresponse = await UsuarioService.PostUsuario(UsuarioDTO, Token.GenerarToken());
             if (Usuarioresponse == null)

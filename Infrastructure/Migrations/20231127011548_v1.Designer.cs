@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TEAyudoContext))]
-    [Migration("20231030193702_v1")]
+    [Migration("20231127011548_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -65,6 +65,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoUsuario")
+                        .HasColumnType("int");
 
                     b.Property<string>("Token")
                         .IsRequired()

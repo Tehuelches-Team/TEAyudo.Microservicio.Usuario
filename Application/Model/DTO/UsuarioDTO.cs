@@ -10,5 +10,6 @@
         public string FotoPerfil { get; set; }
         public string Domicilio { get; set; }
         public string FechaNacimiento { get; set; }
+        public int TipoUsuario { get; set; }
     }
 }
