@@ -47,43 +47,6 @@ namespace Application.Service
         }
 
 
-        public Task<string> VerificarToken(string token)
-        {
-            throw new NotImplementedException();
-            //// Decodificar y validar el token recibido
-            //var tokenHandler = new JwtSecurityTokenHandler();
-            //var keyBytes = Encoding.UTF8.GetBytes(_SecretKey);
-            ////var rsaSecurityKey = new RsaSecurityKey(keyBytes);
-            //var validationParameters = new TokenValidationParameters
-            //{
-            //    ValidateIssuer = false,
-            //    ValidateAudience = false,
-            //    ValidateLifetime = true,
-            //    ValidateIssuerSigningKey = true,
-            //};
-            //// Agregar la clave al conjunto de claves disponibles para validar la firma
-            ////validationParameters.IssuerSigningKeys = new List<SecurityKey> { validationParameters.IssuerSigningKey };
-
-            //var principal = tokenHandler.ValidateToken(token, validationParameters, out Microsoft.IdentityModel.Tokens.SecurityToken validatedToken);
-
-            //// El token es válido, puedes acceder a la información del usuario desde 'principal'
-
-            //var NombreUsuario = principal.Claims.First(claim => claim.Type == "name").Value;
-            //string[] nombres = NombreUsuario.Split(" ");
-            //string nombre = nombres[0];
-            //string apellido = nombres[1];
-            //var correo = principal.Claims.First(claim => claim.Type == "email").Value;
-            //var foto = principal.Claims.First(claim => claim.Type == "picture").Value;
-
-            ////var NuevoToken = GenerateToken(nombre, apellido, foto, correo);
-            //return Task.FromResult(NuevoToken);
-        }
-
-        public Task<string> VerificarTokenFirebase(string token)
-        {
-
-            throw new NotImplementedException();
-        }
     }
 
 
