@@ -21,7 +21,7 @@ namespace TEAyudo_Usuarios_Test.Application
             var mockUsuarioQuery = new Mock<IUsuarioQuery>();
 
             // Configuración del mock para GetAllUsuarios
-            var usuarios = new List<Usuario> { /* Agrega usuarios de prueba */ };
+            var usuarios = new List<Usuario> { };
             mockUsuarioQuery.Setup(q => q.GetAllUsuarios()).ReturnsAsync(usuarios);
 
             var usuarioService = new UsuarioService(mockUsuarioCommand.Object, mockUsuarioQuery.Object);
@@ -58,7 +58,7 @@ namespace TEAyudo_Usuarios_Test.Application
 
             // Configuración del mock para GetUsuarioById
             var usuarioId = 1; // Id de usuario existente
-            var usuario = new Usuario { /* Configura un usuario de prueba */ };
+            var usuario = new Usuario { };
             mockUsuarioQuery.Setup(q => q.GetUsuarioById(usuarioId)).ReturnsAsync(usuario);
 
             var usuarioService = new UsuarioService(mockUsuarioCommand.Object, mockUsuarioQuery.Object);

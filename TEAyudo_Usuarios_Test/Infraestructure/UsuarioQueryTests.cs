@@ -69,8 +69,6 @@ namespace TEAyudo_Usuarios_Test.Infraestructure
             Assert.NotNull(result);
             Assert.Empty(result);
         }
-
-        // Puedes agregar más pruebas según sea necesario
     }
 
     // Clase auxiliar para comparar objetos Usuario en las pruebas

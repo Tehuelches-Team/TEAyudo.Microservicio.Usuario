@@ -27,7 +27,6 @@ namespace TEAyudo_Usuarios_Test.Application.Model
             Assert.Null(usuarioResponse.FechaNacimiento);
             Assert.Null(usuarioResponse.EstadoUsuarioId);
 
-            // Modify properties
             usuarioResponse.UsuarioId = 1;
             usuarioResponse.CUIL = 123456789;
             usuarioResponse.Nombre = "John";
@@ -39,7 +38,7 @@ namespace TEAyudo_Usuarios_Test.Application.Model
             usuarioResponse.FechaNacimiento = "1990-01-01";
             usuarioResponse.EstadoUsuarioId = 2;
 
-            // Assert after modification
+            // Assert 
             Assert.Equal(1, usuarioResponse.UsuarioId);
             Assert.Equal(123456789, usuarioResponse.CUIL);
             Assert.Equal("John", usuarioResponse.Nombre);

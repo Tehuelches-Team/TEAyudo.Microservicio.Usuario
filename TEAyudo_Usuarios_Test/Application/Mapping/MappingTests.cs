@@ -20,7 +20,6 @@ namespace TEAyudo_Usuarios_Test.Application.Mapping
             {
                 new Usuario { UsuarioId = 1, Nombre = "Usuario1" },
                 new Usuario { UsuarioId = 2, Nombre = "Usuario2" }
-                // Agrega más usuarios según sea necesario para tus pruebas
             };
 
             // Act
@@ -34,7 +33,6 @@ namespace TEAyudo_Usuarios_Test.Application.Mapping
             {
                 Assert.Equal(listaUsuarios[i].UsuarioId, listaResponse[i].UsuarioId);
                 Assert.Equal(listaUsuarios[i].Nombre, listaResponse[i].Nombre);
-                // Asegúrate de agregar más aserciones según las propiedades que tengas en Usuario y UsuarioResponse
             }
         }
     }
